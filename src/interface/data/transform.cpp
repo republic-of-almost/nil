@@ -3,6 +3,7 @@
 #include <data/data.hpp>
 #include <graph/graph.hpp>
 #include <string.h>
+#include "common.hpp"
 
 
 namespace Nil {
@@ -60,22 +61,16 @@ set(Node &node, const Transform &in)
 
 
 bool
-has_transform(const Node &node)
+has_transform(const Node &)
 {
-  /*
-    A default property
-  */
   return true;
 }
 
 
 uint64_t
-get_type_id_transform()
+get_type_id(const Transform &)
 {
-  const static uint64_t type_id = Data::register_type_id();
-  LIB_ASSERT(type_id);
-  
-  return type_id;
+  NIL_DATA_TYPE_ID_REG
 }
 
 

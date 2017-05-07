@@ -37,7 +37,7 @@ set(Node &node, const Window &in)
     graph->component_data.window_node_id,
     graph->component_data.window_data,
     in,
-    get_type_id_window()))
+    get_type_id(in)))
   {
     NIL_DATA_SETTER_ERROR(Window)
   }
@@ -54,7 +54,7 @@ has_window(const Node &node)
 
 
 uint64_t
-get_type_id_window()
+get_type_id(const Window &)
 {
   NIL_DATA_TYPE_ID_REG
 }

@@ -31,8 +31,22 @@ public:
   Node(const Node &other);
   Node& operator=(const Node &other);
 
-  Node(Node &&other);
-  Node& operator=(Node &&other);
+  Node(Node &&other) noexcept;
+  Node& operator=(Node &&other) noexcept;
+  
+  
+  // ---------------------------------------------------------- [ Operators ] --
+  
+  
+  bool
+  operator==(const Node &other) const;
+  
+  
+  bool
+  operator!=(const Node &other) const;
+  
+  
+  operator bool() const;
   
 
   // -------------------------------------------------------------- [ State ] --

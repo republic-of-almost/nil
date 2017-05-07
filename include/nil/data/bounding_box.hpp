@@ -30,7 +30,8 @@ has_bounding_box(const Node &node);
 
 
 uint64_t
-get_type_id_bounding_box();
+get_type_id(const Bounding_box &in);
+
 
 } // ns
 } // ns

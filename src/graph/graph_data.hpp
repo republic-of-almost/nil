@@ -55,9 +55,21 @@ struct Component_data
 
   lib::array<uint32_t>              gamepad_node_id;
   lib::array<Nil::Data::Gamepad>    gamepad_data;
+
+  lib::array<uint32_t>              graphics_node_id;
+  lib::array<Nil::Data::Graphics>   graphics_data;
   
   lib::array<uint32_t>              keyboard_node_id;
   lib::array<Nil::Data::Keyboard>   keyboard_data;
+
+  lib::array<uint32_t>              light_node_id;
+  lib::array<Nil::Data::Light>      light_data;
+
+  lib::array<uint32_t>              logic_node_id;
+  lib::array<Nil::Data::Logic>      logic_data;
+
+  lib::array<uint32_t>              material_node_id;
+  lib::array<Nil::Data::Material>   material_data;
   
   lib::array<uint32_t>              mesh_node_id;
   lib::array<Nil::Data::Mesh>       mesh_data;

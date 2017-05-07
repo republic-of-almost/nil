@@ -42,7 +42,7 @@ has_gamepad(const Node &node);
 
 
 uint64_t
-get_type_id_gamepad();
+get_type_id(const Gamepad &in);
 
 
 } // ns

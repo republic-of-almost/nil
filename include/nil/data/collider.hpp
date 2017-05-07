@@ -66,7 +66,7 @@ has_collider(const Node &node);
 
 
 uint64_t
-get_type_id_collider();
+get_type_id(const Collider &in);
 
 
 

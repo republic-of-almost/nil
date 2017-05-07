@@ -30,7 +30,7 @@ has_texture(const Node &node);
 
 
 uint64_t
-get_type_id_texture();
+get_type_id(const Texture &in);
 
 
 } // ns

@@ -50,6 +50,29 @@ Node::~Node()
 }
 
 
+// ------------------------------------------------------------ [ Operators ] --
+  
+  
+bool
+Node::operator==(const Node &other) const
+{
+  return m_node_id == other.get_id();
+}
+
+
+bool
+Node::operator!=(const Node &other) const
+{
+  return m_node_id != other.get_id();
+}
+
+
+Node::operator bool() const
+{
+  return is_valid();
+}
+
+
 // ---------------------------------------------------------- [ Copy / Move ] --
 
 
@@ -71,7 +94,7 @@ Node::operator=(const Node &other)
 Node::Node(Node &&other)
 : m_node_id(!other.is_ref() ? lib::entity::create(node_owned_id, other.get_id()) : lib::entity::create(node_reference_id, other.get_id()))
 {
-  if(other.get_id())
+  if(!other.is_ref())
   {
     other.m_node_id = lib::entity::create(node_reference_id, other.get_id());
   }
@@ -158,8 +181,6 @@ Node::is_valid() const
     
     return is_valid || is_pending;
   }
-  
-  LOG_ERROR(node_msg_invalid_node);
   
   return false;
 }

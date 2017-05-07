@@ -37,7 +37,7 @@ set(Node &node, const Mouse &in)
     graph->component_data.mouse_node_id,
     graph->component_data.mouse_data,
     in,
-    get_type_id_mesh()))
+    get_type_id(in)))
   {
     NIL_DATA_SETTER_ERROR(Mouse)
   }
@@ -54,7 +54,7 @@ has_mouse(const Node &node)
 
 
 uint64_t
-get_type_id_mouse()
+get_type_id(const Mouse &)
 {
   NIL_DATA_TYPE_ID_REG
 }

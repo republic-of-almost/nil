@@ -37,7 +37,7 @@ set(Node &node, const Rigidbody &in)
     graph->component_data.rigidbody_node_id,
     graph->component_data.rigidbody_data,
     in,
-    get_type_id_rigidbody()))
+    get_type_id(in)))
   {
     NIL_DATA_SETTER_ERROR(Rigidbody)
   }
@@ -54,7 +54,7 @@ has_rigidbody(const Node &node)
 
 
 uint64_t
-get_type_id_rigidbody()
+get_type_id(const Rigidbody &)
 {
   NIL_DATA_TYPE_ID_REG
 }

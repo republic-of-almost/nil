@@ -13,14 +13,48 @@ namespace Nil {
 constexpr uint32_t version = 0;
 
 
+struct Engine_settings
+{
+  bool pause_node_events;
+  bool disable_tasks;
+};
+
+
+struct Engine_state
+{
+  // Events
+  Node_event*   node_events;
+  size_t        node_event_count;
+  
+  // Data Count
+  size_t        node_count;
+  size_t        bounding_box_count;
+  size_t        camera_count;
+  size_t        collider_count;
+  size_t        developer_count;
+  size_t        gamepad_count;
+  size_t        keyboard_count;
+  size_t        light_count;
+  size_t        material_count;
+  size_t        mesh_count;
+  size_t        mouse_count;
+  size_t        resouce_count;
+  size_t        rigidbody_count;
+  size_t        texture_count;
+  size_t        transform_count;
+  size_t        window_count;
+};
+
+
 class Engine final
 {
+  Engine(const Engine&) = delete;
+  Engine& operator=(const Engine&) = delete;
+
 public:
 
   explicit
   Engine();
-  
-  
   ~Engine();
   
   
@@ -38,6 +72,18 @@ public:
   
   bool
   run();
+  
+  
+  void
+  set_settings(const Engine_settings &in);
+  
+  
+  void
+  get_settings(Engine_settings &out);
+  
+  
+  void
+  get_state(Engine_state &out);
   
 
 private:

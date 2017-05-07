@@ -37,7 +37,7 @@ set(Node &node, const Camera &in)
     graph->component_data.camera_node_id,
     graph->component_data.camera_data,
     in,
-    get_type_id_camera()))
+    get_type_id(in)))
   {
     NIL_DATA_SETTER_ERROR(Camera)
   }
@@ -54,7 +54,7 @@ has_camera(const Node &node)
 
 
 uint64_t
-get_type_id_camera()
+get_type_id(const Camera &)
 {
   NIL_DATA_TYPE_ID_REG
 }

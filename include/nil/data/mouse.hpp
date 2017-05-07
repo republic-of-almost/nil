@@ -34,7 +34,7 @@ has_mouse(const Node &node);
 
 
 uint64_t
-get_type_id_mouse();
+get_type_id(const Mouse &in);
 
 
 

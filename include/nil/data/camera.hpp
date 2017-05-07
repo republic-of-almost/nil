@@ -41,7 +41,7 @@ has_camera(const Node &node);
 
 
 uint64_t
-get_type_id_camera();
+get_type_id(const Camera &in);
 
 
 } // ns

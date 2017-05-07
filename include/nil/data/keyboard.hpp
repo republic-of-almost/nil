@@ -31,7 +31,7 @@ has_keyboard(const Node &node);
 
 
 uint64_t
-get_type_id_keyboard();
+get_type_id(const Keyboard &in);
 
 
 } // n

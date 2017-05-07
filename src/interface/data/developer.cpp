@@ -37,7 +37,7 @@ set(Node &node, const Developer &in)
     graph->component_data.developer_node_id,
     graph->component_data.developer_data,
     in,
-    get_type_id_developer()))
+    get_type_id(in)))
   {
     NIL_DATA_SETTER_ERROR(Developer)
   }
@@ -54,7 +54,7 @@ has_developer(const Node &node)
 
 
 uint64_t
-get_type_id_developer()
+get_type_id(const Developer &)
 {
   NIL_DATA_TYPE_ID_REG
 }

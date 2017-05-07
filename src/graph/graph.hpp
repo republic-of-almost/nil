@@ -88,6 +88,10 @@ uint32_t
 node_get_parent(const Data *data, const uint32_t node_id);
 
 
+bool
+node_modified(Data *data, const uint32_t node_id);
+
+
 // ----------------------------------------------------------- [ Attributes ] --
 
 

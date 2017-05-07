@@ -37,7 +37,7 @@ set(Node &node, const Collider &in)
     graph->component_data.collider_node_id,
     graph->component_data.collider_data,
     in,
-    get_type_id_collider()))
+    get_type_id(in)))
   {
     NIL_DATA_SETTER_ERROR(Collider)
   }
@@ -54,7 +54,7 @@ has_collider(const Node &node)
 
 
 uint64_t
-get_type_id_collider()
+get_type_id(const Collider &)
 {
   NIL_DATA_TYPE_ID_REG
 }

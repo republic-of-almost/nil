@@ -37,7 +37,7 @@ set(Node &node, const Mesh &in)
     graph->component_data.mesh_node_id,
     graph->component_data.mesh_data,
     in,
-    get_type_id_mesh()))
+    get_type_id(in)))
   {
     NIL_DATA_SETTER_ERROR(Mesh)
   }
@@ -54,7 +54,7 @@ has_mesh(const Node &node)
 
 
 uint64_t
-get_type_id_mesh()
+get_type_id(const Mesh &)
 {
   NIL_DATA_TYPE_ID_REG
 }

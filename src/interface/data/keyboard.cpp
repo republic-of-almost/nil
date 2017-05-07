@@ -37,7 +37,7 @@ set(Node &node, const Keyboard &in)
     graph->component_data.keyboard_node_id,
     graph->component_data.keyboard_data,
     in,
-    get_type_id_keyboard()))
+    get_type_id(in)))
   {
     NIL_DATA_SETTER_ERROR(Keyboard)
   }
@@ -54,7 +54,7 @@ has_keyboard(const Node &node)
 
 
 uint64_t
-get_type_id_keyboard()
+get_type_id(const Keyboard &)
 {
   NIL_DATA_TYPE_ID_REG
 }

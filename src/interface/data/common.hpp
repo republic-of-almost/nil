@@ -73,7 +73,7 @@ setter_helper(Node node, S &id_arr, T &data_arr, const U &in, const uint32_t dat
   Graph::Data *graph = Data::get_graph_data();
   LIB_ASSERT(graph);
   
-//  LIB_ASSERT(false); // Need to be able to add an event here easily!
+  Graph::node_modified(graph, node.get_id());
   
   return true;
 }

@@ -29,7 +29,7 @@ has_rigidbody(const Node &node);
 
 
 uint64_t
-get_type_id_rigidbody();
+get_type_id(const Rigidbody &in);
 
 
 } // ns

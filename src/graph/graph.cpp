@@ -26,7 +26,9 @@ namespace
     LIB_ASSERT(graph);
 
     LIB_ASSERT(graph->node_id.size() == graph->parent_depth_data.size());
+    LIB_ASSERT(graph->node_id.size() == graph->name.size());
     LIB_ASSERT(graph->node_id.size() == graph->local_transform.size());
+    LIB_ASSERT(graph->node_id.size() == graph->world_transform.size());
     LIB_ASSERT(graph->node_id.size() == graph->bounding_box.size());
     LIB_ASSERT(graph->node_id.size() == graph->node_type_id.size());
     LIB_ASSERT(graph->node_id.size() == graph->user_data.size());
@@ -107,6 +109,7 @@ namespace
       evt_id,
       node_id
     );
+    memset(graph->node_events.back().name.data, 0, sizeof(short_string));
     graph->node_events.back().last_update = graph->graph_tick;
     
     return &graph->node_events.back();
@@ -131,10 +134,13 @@ namespace
   void
   graph_add(Graph::Data *graph, const Graph::Event *evt)
   {
+    static short_string default_name {"Node"};
+  
     graph->node_id.emplace_back(evt->node_id);
     graph->parent_depth_data.emplace_back(uint64_t{0});
-    graph->name.emplace_back(evt->name);
+    graph->name.emplace_back(strlen(evt->name.data) > 0 ? evt->name : default_name);
     graph->local_transform.emplace_back(evt->transform);
+    graph->world_transform.emplace_back(evt->transform);
     graph->bounding_box.emplace_back(evt->boundinb_box);
     graph->node_type_id.emplace_back(evt->node_type_id);
     graph->user_data.emplace_back(evt->user_data);
@@ -212,6 +218,12 @@ namespace
         graph->local_transform.begin() + (this_index + nodes_to_move)
       );
       graph->local_transform.erase(this_index, nodes_to_move);
+      
+      lib::array<math::transform, stack_hint> move_world_transform(
+        graph->world_transform.begin() + this_index,
+        graph->world_transform.begin() + (this_index + nodes_to_move)
+      );
+      graph->world_transform.erase(this_index, nodes_to_move);
       
       lib::array<math::aabb, stack_hint> move_bounding_box(
         graph->bounding_box.begin() + this_index,
@@ -296,6 +308,12 @@ namespace
         nodes_to_move
       );
       
+      graph->world_transform.insert(
+        insert_index,
+        move_world_transform.data(),
+        nodes_to_move
+      );
+      
       graph->bounding_box.insert(
         insert_index,
         move_bounding_box.data(),
@@ -350,7 +368,6 @@ namespace
       {
         graph->last_update[i] = graph->graph_tick;
       }
-      
     }
 
   }
@@ -367,8 +384,10 @@ namespace
     if(node_exists(graph, node_id, &index))
     {
       graph->node_id.erase(index);
+      graph->name.erase(index);
       graph->parent_depth_data.erase(index);
       graph->local_transform.erase(index);
+      graph->world_transform.erase(index);
       graph->bounding_box.erase(index);
       graph->node_type_id.erase(index);
       graph->user_data.erase(index);
@@ -422,7 +441,6 @@ think(Data *graph)
         graph->last_update[index] = graph->graph_tick;
       }
     }
-
 
     for(const Graph::Event &event : graph->node_events)
     {
@@ -736,6 +754,18 @@ node_get_parent(const Data *graph, const uint32_t node_id)
   }
 
   return 0;
+}
+
+
+bool
+node_modified(Data *data, const uint32_t node_id)
+{
+  Event evt{};
+  evt.node_id = node_id;
+  evt.event_action  |= Event::UPDATED_DATA;
+  data->node_events.emplace_back(evt);
+  
+  return true; // ?
 }
 
 

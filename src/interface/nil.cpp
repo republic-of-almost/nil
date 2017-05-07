@@ -196,4 +196,22 @@ Engine::run()
 }
 
 
+void
+Engine::set_settings(const Engine_settings &in)
+{
+}
+
+
+void
+Engine::get_settings(Engine_settings &out)
+{
+}
+
+
+void
+Engine::get_state(Engine_state &out)
+{
+}
+
+
 } // ns

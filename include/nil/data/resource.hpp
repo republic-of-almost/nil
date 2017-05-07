@@ -43,7 +43,7 @@ has_resource(const Node &node);
 
 
 uint64_t
-get_type_id_resource();
+get_type_id(const Resource &in);
 
 
 } // ns

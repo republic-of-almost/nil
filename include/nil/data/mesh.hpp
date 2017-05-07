@@ -33,7 +33,7 @@ has_mesh(const Node &node);
 
 
 uint64_t
-get_type_id_mesh();
+get_type_id(const Mesh &in);
 
 
 } // ns

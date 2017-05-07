@@ -37,7 +37,7 @@ set(Node &node, const Resource &in)
     graph->component_data.resource_node_id,
     graph->component_data.resource_data,
     in,
-    get_type_id_resource()))
+    get_type_id(in)))
   {
     NIL_DATA_SETTER_ERROR(Resource)
   }
@@ -54,7 +54,7 @@ has_resource(const Node &node)
 
 
 uint64_t
-get_type_id_resource()
+get_type_id(const Resource &)
 {
   NIL_DATA_TYPE_ID_REG
 }

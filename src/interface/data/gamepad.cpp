@@ -37,7 +37,7 @@ set(Node &node, const Gamepad &in)
     graph->component_data.gamepad_node_id,
     graph->component_data.gamepad_data,
     in,
-    get_type_id_gamepad()))
+    get_type_id(in)))
   {
     NIL_DATA_SETTER_ERROR(Gamepad)
   }
@@ -54,7 +54,7 @@ has_gamepad(const Node &node)
 
 
 uint64_t
-get_type_id_gamepad()
+get_type_id(const Gamepad &)
 {
   NIL_DATA_TYPE_ID_REG
 }

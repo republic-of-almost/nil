@@ -3,6 +3,7 @@
 #include <data/data.hpp>
 #include <graph/graph.hpp>
 #include <string.h>
+#include "common.hpp"
 
 
 namespace Nil {
@@ -58,22 +59,16 @@ set(Node &node, const Bounding_box &in)
 
 
 bool
-has_bounding_box(const Node &node)
+has_bounding_box(const Node &)
 {
-  /*
-    A default property
-  */
   return true;
 }
 
 
 uint64_t
-get_type_id_bounding_box()
+get_type_id(const Bounding_box &)
 {
-  const static uint64_t type_id = Data::register_type_id();
-  LIB_ASSERT(type_id);
-  
-  return type_id;
+  NIL_DATA_TYPE_ID_REG
 }
 
 

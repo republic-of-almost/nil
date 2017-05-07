@@ -38,7 +38,7 @@ has_developer(const Node &node);
 
 
 uint64_t
-get_type_id_developer();
+get_type_id(const Developer &in);
 
 
 } // ns
