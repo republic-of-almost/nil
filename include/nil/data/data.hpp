@@ -13,10 +13,12 @@
 #include "logic.hpp"
 #include "material.hpp"
 #include "mesh.hpp"
+#include "mesh_resource.hpp"
 #include "mouse.hpp"
 #include "resource.hpp"
 #include "rigidbody.hpp"
 #include "texture.hpp"
+#include "texture_resource.hpp"
 #include "transform.hpp"
 #include "window.hpp"
 

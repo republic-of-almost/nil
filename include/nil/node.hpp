@@ -14,38 +14,67 @@ class Node final
 {
 public:
 
+  /*!
+    Creats an entity that is automatically added to the graph.
+  */
   explicit
   Node();
   
+  /*!
+    Create an invalid entity.
+  */
   Node(const decltype(nullptr));
   
+  /*!
+    Creates an entity from an node id.
+    Warning, creating an owned entity from this could lead to some unexpcted
+    results.
+  */
   explicit
   Node(const uint32_t node_id, const bool is_owning = false);
-    
+  
+  /*!
+    If the entity is owning it will destroy it.
+  */
   ~Node();
   
   
   // -------------------------------------------------------- [ Copy / Move ] --
 
-
+  /*!
+    Create a new entity via copy/move.
+    Move will transfer ownership if it has one.
+  */
   Node(const Node &other);
-  Node& operator=(const Node &other);
-
   Node(Node &&other) noexcept;
+  
+  /*!
+    Assginement will destroy the node being assigned to if its an owned node.
+  */
+  Node& operator=(const Node &other);
   Node& operator=(Node &&other) noexcept;
   
   
   // ---------------------------------------------------------- [ Operators ] --
   
   
+  /*!
+    Comparision. of id types, a ref to the owner will compare as true if their
+    ids are the same.
+  */
   bool
   operator==(const Node &other) const;
-  
-  
+
+  /*!
+    Comparision. of id types, a ref to the owner will compare as true if their
+    ids are the same.
+  */
   bool
   operator!=(const Node &other) const;
   
-  
+  /*!
+    if check if(node), alias for is_valid(node).
+  */
   operator bool() const;
   
 
@@ -129,10 +158,16 @@ public:
   // --------------------------------------------------------------- [ Misc ] --
   
   
+  /*!
+    Gets the name of the node.
+  */
   const char*
   get_name() const;
   
   
+  /*!
+    Sets the name of the node.
+  */
   void
   set_name(const char *);
   
@@ -142,12 +177,7 @@ public:
    */
   uint32_t
   get_id() const;
-  
-  /*!
-   *  Returns the last graph tick this node was edited.
-   */
-  uint64_t
-  get_last_update() const;
+
   
   /*!
    *  Returns the type id of the node data.

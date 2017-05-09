@@ -1,7 +1,32 @@
 #include <nil/aspect.hpp>
+#include <nil/nil.hpp>
 #include <data/data.hpp>
 #include <utilities/array.hpp>
 #include <utilities/logging.hpp>
+
+
+//namespace Nil {
+//namespace Aspect {
+//
+//
+//void
+//set(Nil::Engine &engine, Aspect::Controller &controller)
+//{
+//  engine.add_aspect(&controller);
+//}
+//
+//
+//void
+//register_data_type(Nil::Engine &engine, Aspect::Controller &controller, const uint32_t data_id)
+//{
+//  
+//}
+//
+//
+//} // ns
+//} // ns
+
+
 
 
 namespace Nil {

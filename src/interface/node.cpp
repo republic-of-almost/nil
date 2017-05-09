@@ -56,14 +56,14 @@ Node::~Node()
 bool
 Node::operator==(const Node &other) const
 {
-  return m_node_id == other.get_id();
+  return get_id() == other.get_id();
 }
 
 
 bool
 Node::operator!=(const Node &other) const
 {
-  return m_node_id != other.get_id();
+  return get_id() != other.get_id();
 }
 
 
@@ -85,6 +85,12 @@ Node::Node(const Node &other)
 Node&
 Node::operator=(const Node &other)
 {
+  // If the old one is owning then we need to destroy it
+  if(is_valid() && !is_ref())
+  {
+    destroy();
+  }
+
   this->m_node_id = other.get_id() ? lib::entity::create(node_reference_id, other.get_id()) : 0;
   
   return *this;
@@ -104,6 +110,12 @@ Node::Node(Node &&other)
 Node&
 Node::operator=(Node &&other)
 {
+  // If the old one is owning then we need to destroy it
+  if(is_valid() && !is_ref())
+  {
+    destroy();
+  }
+
   // Clean up this node if its an owning node.
   const uint32_t type_id = lib::entity::type(m_node_id);
   const uint32_t instance_id = lib::entity::instance(m_node_id);
@@ -315,25 +327,6 @@ Node::get_id() const
 {
   const uint32_t instance_id = lib::entity::instance(m_node_id);
   return instance_id;
-}
-
-
-uint64_t
-Node::get_last_update() const
-{
-  const uint32_t instance_id = lib::entity::instance(m_node_id);
-  
-  if(instance_id)
-  {
-    size_t index = 0;
-    Graph::node_exists(Data::get_graph_data(), instance_id, &index);
-    
-    return Data::get_graph_data()->last_update[index];
-  }
-  
-  LOG_ERROR(node_msg_invalid_node);
-  
-  return 0;
 }
 
 

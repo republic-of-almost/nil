@@ -10,6 +10,49 @@
 namespace Nil {
 
 
+///*
+//  Callback prototypes.
+//*/
+//using aspect_startup_fn     = void(*)(Engine &engine, Aspect::Controller &controller);
+//using aspect_node_events_fn = void(*)(Engine &engine, Aspect::Controller &controller, const Node_event events[], const size_t count);
+//using aspect_early_think_fn = void(*)(Engine &engine, Aspect::Controller &controller, const float dt);
+//using aspect_think_fn       = void(*)(Engine &engine, Aspect::Controller &controller, const float dt);
+//using aspect_late_think_fn  = void(*)(Engine &engine, Aspect::Controller &controller, const float dt);
+//using aspect_shutdown_fn    = void(*)(Engine &engine, Aspect::Controller &controller);
+//
+//
+//
+//namespace Aspect {
+//
+//
+///*
+//  Controller.
+//*/
+//struct Controller
+//{
+//  aspect_startup_fn     startup_fn;
+//  aspect_node_events_fn node_events_fn;
+//  aspect_early_think_fn early_think_fn;
+//  aspect_think_fn       think_fn;
+//  aspect_late_think_fn  late_think_fn;
+//  aspect_shutdown_fn    shutdown_fn;
+//
+//  uintptr_t user_data;
+//};
+//
+//
+//
+//void
+//set(Nil::Engine &engine, Aspect::Controller &controller);
+//
+//
+//void
+//register_data_type(Nil::Engine &engine, Aspect::Controller &controller, const uint32_t data_id);
+//
+//
+//} // ns
+
+
 class Aspect
 {
 public:

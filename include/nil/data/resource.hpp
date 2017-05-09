@@ -25,6 +25,7 @@ enum ENUM {
 struct Resource
 {
   uint32_t type;
+  char name[64];
   
   uintptr_t data;
 };

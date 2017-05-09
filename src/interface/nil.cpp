@@ -144,9 +144,9 @@ Engine::run()
             nodes.emplace_back(Node_event{actions, event_node});
           }
         }
-        
-        asp->node_events(nodes.data(), nodes.size());
       }
+      
+      asp->node_events(nodes.data(), nodes.size());
       
       // Get list of registered type ids
       // Build list of changes.
