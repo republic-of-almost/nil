@@ -36,6 +36,7 @@ struct Aspect::Impl
 {
   bool wants_to_quit;
   lib::array<uint32_t, 8> registered_type_ids;
+  Nil::Engine* engine;
 };
 
 
@@ -43,6 +44,7 @@ Aspect::Aspect()
 : m_impl(new Impl)
 {
   m_impl->wants_to_quit = false;
+  m_impl->engine = nullptr;
 }
 
 
@@ -131,6 +133,19 @@ void
 Aspect::set_quit_signal()
 {
   m_impl->wants_to_quit = true;
+}
+
+
+Nil::Engine*
+Aspect::get_engine() const
+{
+  return m_impl->engine;
+}
+
+void
+Aspect::set_engine(Nil::Engine *engine)
+{
+  m_impl->engine = engine;
 }
 
 

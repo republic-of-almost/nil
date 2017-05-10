@@ -11,8 +11,8 @@ namespace Nil {
 
 struct Node_event
 {
-  uint32_t  events;
   Node      node;
+  uint32_t  events;
 };
 
 

@@ -90,6 +90,7 @@ protected:
 
   // ------------------------------------ [ Private State Getters / Setters ] --
 
+  friend class Nil::Engine;
 
   void
   register_data_type(const uint32_t data_type);
@@ -105,6 +106,12 @@ protected:
   
   void
   set_quit_signal();
+  
+  Nil::Engine*
+  get_engine() const;
+  
+  void
+  set_engine(Nil::Engine *engine);
   
 private:
 

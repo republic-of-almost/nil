@@ -16,7 +16,6 @@ constexpr uint32_t version = 0;
 struct Engine_settings
 {
   bool pause_node_events;
-  bool disable_tasks;
 };
 
 
@@ -33,14 +32,18 @@ struct Engine_state
   size_t        collider_count;
   size_t        developer_count;
   size_t        gamepad_count;
+  size_t        graphics_count;
   size_t        keyboard_count;
   size_t        light_count;
+  size_t        logic_count;
   size_t        material_count;
   size_t        mesh_count;
+  size_t        mesh_resource_count;
   size_t        mouse_count;
   size_t        resouce_count;
   size_t        rigidbody_count;
   size_t        texture_count;
+  size_t        texture_resource_count;
   size_t        transform_count;
   size_t        window_count;
 };

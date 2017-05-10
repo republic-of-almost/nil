@@ -92,12 +92,6 @@ namespace
       if(graph->node_events[i].node_id == node_id)
       {
         uint32_t curr_events = graph->node_events[i].event_action;
-        
-        if(evt_id == Graph::Event::REMOVED)
-        {
-          // Remove the added event
-          curr_events &= ~Graph::Event::ADDED;
-        }
       
         graph->node_events[i].event_action = curr_events | evt_id;
         
@@ -666,8 +660,9 @@ node_descendants_count(
   // Calculate descendants  
   {
     const int32_t this_depth = node_id ? get_depth(graph->parent_depth_data[index]) : -1;
+    const size_t start = this_depth > 0 ? index + 1 : 0;
     
-    for(size_t i = index + 1; i < graph->node_id.size(); ++i)
+    for(size_t i = start; i < graph->node_id.size(); ++i)
     {
       const int32_t that_depth = get_depth(graph->parent_depth_data[i]);
     
@@ -760,10 +755,12 @@ node_get_parent(const Data *graph, const uint32_t node_id)
 bool
 node_modified(Data *data, const uint32_t node_id)
 {
-  Event evt{};
-  evt.node_id = node_id;
-  evt.event_action  |= Event::UPDATED_DATA;
-  data->node_events.emplace_back(evt);
+  add_event(data, Event::UPDATED_DATA, node_id);
+
+//  Event evt{};
+//  evt.node_id = node_id;
+//  evt.event_action  |= Event::UPDATED_DATA;
+//  data->node_events.emplace_back(evt);
   
   return true; // ?
 }
@@ -816,6 +813,7 @@ node_set_name(
   else if(node_pending(data, node_id, &index))
   {
     strlcpy(data->node_events[index].name.data, clipped, str_len);
+    add_event(data, Graph::Event::UPDATED_DATA, node_id);
     return true;
   }
   
@@ -863,6 +861,7 @@ node_set_transform(
   else if(node_pending(data, node_id, &index))
   {
     data->node_events[index].transform = *trans;
+    add_event(data, Graph::Event::UPDATED_DATA, node_id);
     return true;
   }
   
@@ -910,6 +909,7 @@ node_set_bounding_box(
   else if(node_pending(data, node_id, &index))
   {
     data->node_events[index].boundinb_box = *aabb;
+    add_event(data, Graph::Event::UPDATED_DATA, node_id);
     return true;
   }
   
@@ -957,6 +957,7 @@ node_set_data_type_id(
   else if(node_pending(data, node_id, &index))
   {
     data->node_events[index].node_type_id = *type_id;
+    add_event(data, Graph::Event::UPDATED_DATA, node_id);
     return true;
   }
   
@@ -1004,6 +1005,7 @@ node_set_user_data(
   else if(node_pending(data, node_id, &index))
   {
     data->user_data[index] = *user_data;
+    add_event(data, Graph::Event::UPDATED_DATA, node_id);
     return true;
   }
   

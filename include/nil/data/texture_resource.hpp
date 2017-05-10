@@ -16,7 +16,7 @@ struct Texture_resource
   uint32_t id;
   uint32_t compoents;
   uint32_t dimentions;
-  
+    
   uint8_t *data;
   size_t sizeof_data;
 };
