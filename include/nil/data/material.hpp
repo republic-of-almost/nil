@@ -12,13 +12,15 @@ namespace Data {
 
 struct Material
 {
-  uint32_t shader;
-  uint8_t color[4];
-  uint32_t texture_01;
-  uint32_t texture_02;
-  uint32_t texture_03;
-  float scale[2];
-  float offset[2];
+  uint32_t  shader;
+  float     color[4];
+  
+  uint32_t  texture_01;
+  uint32_t  texture_02;
+  uint32_t  texture_03;
+  
+  float     scale[2];
+  float     offset[2];
 };
 
 

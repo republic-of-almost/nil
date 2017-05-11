@@ -391,6 +391,249 @@ namespace
       graph_size_check(graph);
       #endif
     }
+    
+    // -- Remove The Data -- //
+    {
+      Component_data &data = graph->component_data;
+      
+      // Camera Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.camera_node_id.data(),
+          data.camera_node_id.size(), &index))
+        {
+          data.camera_node_id.erase(index);
+          data.camera_data.erase(index);
+        }
+      }
+      
+      // Collider Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.collider_node_id.data(),
+          data.collider_node_id.size(), &index))
+        {
+          data.collider_node_id.erase(index);
+          data.collider_data.erase(index);
+        }
+      }
+      
+      // Developer Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.developer_node_id.data(),
+          data.developer_node_id.size(), &index))
+        {
+          data.developer_node_id.erase(index);
+          data.developer_data.erase(index);
+        }
+      }
+      
+      // Gamepad Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.gamepad_node_id.data(),
+          data.gamepad_node_id.size(), &index))
+        {
+          data.gamepad_node_id.erase(index);
+          data.gamepad_data.erase(index);
+        }
+      }
+      
+      // Graphics Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.graphics_node_id.data(),
+          data.graphics_node_id.size(), &index))
+        {
+          data.graphics_node_id.erase(index);
+          data.graphics_data.erase(index);
+        }
+      }
+      
+      // Keyboard Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.keyboard_node_id.data(),
+          data.keyboard_node_id.size(), &index))
+        {
+          data.keyboard_node_id.erase(index);
+          data.keyboard_data.erase(index);
+        }
+      }
+      
+      // Light Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.light_node_id.data(),
+          data.light_node_id.size(), &index))
+        {
+          data.light_node_id.erase(index);
+          data.light_data.erase(index);
+        }
+      }
+      
+      // Logic Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.logic_node_id.data(),
+          data.logic_node_id.size(), &index))
+        {
+          data.logic_node_id.erase(index);
+          data.logic_data.erase(index);
+        }
+      }
+      
+      // Material Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.material_node_id.data(),
+          data.material_node_id.size(), &index))
+        {
+          data.material_node_id.erase(index);
+          data.material_data.erase(index);
+        }
+      }
+      
+      // Mesh Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.mesh_node_id.data(),
+          data.mesh_node_id.size(), &index))
+        {
+          data.mesh_node_id.erase(index);
+          data.mesh_data.erase(index);
+        }
+      }
+      
+      // Mesh Resource Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.mesh_resource_node_id.data(),
+          data.mesh_resource_node_id.size(), &index))
+        {
+          data.mesh_resource_node_id.erase(index);
+          data.mesh_data.erase(index);
+        }
+      }
+      
+      // Mouse Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.mouse_node_id.data(),
+          data.mouse_node_id.size(), &index))
+        {
+          data.mouse_node_id.erase(index);
+          data.mouse_data.erase(index);
+        }
+      }
+      
+      // Resource Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.resource_node_id.data(),
+          data.resource_node_id.size(), &index))
+        {
+          data.resource_node_id.erase(index);
+          data.resource_data.erase(index);
+        }
+      }
+      
+      // Rigidbody Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.rigidbody_node_id.data(),
+          data.rigidbody_node_id.size(), &index))
+        {
+          data.rigidbody_node_id.erase(index);
+          data.rigidbody_data.erase(index);
+        }
+      }
+      
+      // Texture Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.texture_node_id.data(),
+          data.texture_node_id.size(), &index))
+        {
+          data.texture_node_id.erase(index);
+          data.texture_data.erase(index);
+        }
+      }
+      
+      // Texture Resource Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.texture_resource_node_id.data(),
+          data.texture_resource_node_id.size(), &index))
+        {
+          data.texture_resource_node_id.erase(index);
+          data.texture_resource_data.erase(index);
+        }
+      }
+      
+      // Window Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.window_node_id.data(),
+          data.window_node_id.size(), &index))
+        {
+          data.window_node_id.erase(index);
+          data.window_data.erase(index);
+        }
+      }
+    }
   }
   
 } // ns
