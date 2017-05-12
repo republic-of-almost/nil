@@ -40,7 +40,8 @@ struct Aspect
   bool                      want_to_quit;
   
 //  lib::array<uint64_t, 16>  data_types;
-  std::vector<uint64_t>      data_types;
+//  std::vector<uint64_t>      data_types;
+  uint64_t                  data_types;
   
   uintptr_t                 user_data;
 };
