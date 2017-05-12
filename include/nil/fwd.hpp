@@ -6,18 +6,12 @@ namespace Nil {
 
 
 class Node;
-class Aspect;
 class Engine;
-struct Node_event;
 
+struct Event_data;
+class Event_list;
 
-//namespace Aspect {
-//
-//
-//struct Controller;
-//
-//
-//} // ns
+struct Aspect;
 
 
 namespace Data {

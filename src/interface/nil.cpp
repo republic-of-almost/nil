@@ -14,9 +14,11 @@ namespace Nil {
 
 struct Engine::Impl
 {
-  lib::array<Aspect*, 16> aspects;
+  std::vector<Aspect> aspects;
+  
+  
   Engine_settings settings;
-  std::vector<Node_event> pending_events;
+  std::vector<Event_data> pending_events;
 };
 
 
@@ -43,9 +45,8 @@ Engine::~Engine()
 
 
 void
-Engine::add_aspect(Nil::Aspect *aspect)
+Engine::add_aspect(Nil::Aspect aspect)
 {
-  LIB_ASSERT(aspect);
   LIB_ASSERT(m_impl);
   
   if(!m_impl)
@@ -54,45 +55,12 @@ Engine::add_aspect(Nil::Aspect *aspect)
     return;
   }
   
-  // Search to see if its in already
-  for(Aspect *asp : m_impl->aspects)
-  {
-    if(asp == aspect)
-    {
-      LOG_WARNING("Already added this aspect");
-      return;
-    }
-  }
-  
-  // Add to list.
   m_impl->aspects.emplace_back(aspect);
-  aspect->set_engine(this);
-}
-
-
-void
-Engine::remove_aspect(Nil::Aspect *aspect)
-{
-  LIB_ASSERT(aspect);
-  LIB_ASSERT(m_impl);
   
-  if(!m_impl)
+  if(aspect.start_up_fn)
   {
-    LOG_ERROR_ONCE("Engine is in corrupted state.");
-    return;
+    aspect.start_up_fn(*this, m_impl->aspects.back());
   }
-
-  // Search to see if its in already
-  for(size_t i = 0; i < m_impl->aspects.size(); ++i)
-  {
-    if(m_impl->aspects[i] == aspect)
-    {
-      m_impl->aspects.erase(i);
-      return;
-    }
-  }
-  
-  LOG_WARNING("Can't find aspect to remove.")
 }
 
 
@@ -134,8 +102,8 @@ Engine::run()
     for(size_t j = 0; j < graph->node_events.size(); ++j)
     {
       m_impl->pending_events.emplace_back(
-        Node_event{
-          Node(graph->node_events[j].node_id, false),
+        Event_data{
+          graph->node_events[j].node_id,
           graph->node_events[j].event_action
         }
       );
@@ -145,31 +113,31 @@ Engine::run()
   // Distro Events
   if(!m_impl->settings.pause_node_events)
   {
-    std::vector<Node_event> nodes;
+    std::vector<Event_data> nodes;
   
-    for(Aspect *asp : m_impl->aspects)
+    for(Aspect &asp : m_impl->aspects)
     {
       for(size_t j = 0; j < Data::get_graph_data()->node_events.size(); ++j)
       {
-        const Node event_node(Data::get_graph_data()->node_events[j].node_id, false);
+        const Node event_node(Data::get_graph_data()->node_events[j].node_id);
        
-        const size_t count = asp->get_registered_type_count();
-        const uint32_t *reged_ids = asp->get_registered_types();
+        const size_t count = asp.data_types.size();
+        const uint64_t *reged_ids = asp.data_types.data();
         
         for(size_t i = 0; i < count; ++i)
         {
-          const uint32_t data_id = reged_ids[i];
+          const uint64_t data_id = reged_ids[i];
           
           if(data_id & event_node.get_data_type_id())
           {
             const uint32_t actions = Data::get_graph_data()->node_events[j].event_action;
           
-            nodes.emplace_back(Node_event{event_node, actions});
+            nodes.emplace_back(Event_data{event_node.get_id(), actions});
             break;
           }
         }
       }
-
+    
       
 //      const size_t count = asp->get_registered_type_count();
 //      const uint32_t *reged_ids = asp->get_registered_types();
@@ -194,7 +162,13 @@ Engine::run()
 //        }
 //      }
     
-      asp->node_events(nodes.data(), nodes.size());
+      if(asp.events_fn)
+      {
+        uint32_t dt_size = asp.data_types.size();
+      
+        Event_list evt_list(nodes);
+        asp.events_fn(*this, asp, evt_list);
+      }
       
       // Get list of registered type ids
       // Build list of changes.
@@ -209,21 +183,31 @@ Engine::run()
   
   // Thinking
   {
-    for(Aspect *asp : m_impl->aspects)
+    for(Aspect &asp : m_impl->aspects)
     {
-      asp->early_think(0.16);
+//      asp->early_think(0.16);
+      if(asp.early_think_fn)
+      {
+        asp.early_think_fn(*this, asp);
+      }
     }
     
     // Think
-    for(Aspect *asp : m_impl->aspects)
+    for(Aspect &asp : m_impl->aspects)
     {
-      asp->think(0.16);
+      if(asp.think_fn)
+      {
+        asp.think_fn(*this, asp);
+      }
     }
     
     // Late Think
-    for(Aspect *asp : m_impl->aspects)
+    for(Aspect &asp : m_impl->aspects)
     {
-      asp->late_think(0.16);
+      if(asp.late_think_fn)
+      {
+        asp.late_think_fn(*this, asp);
+      }
     }
   }
   
@@ -233,9 +217,9 @@ Engine::run()
   {
     bool should_quit = false;
     
-    for(Aspect *asp : m_impl->aspects)
+    for(Aspect &asp : m_impl->aspects)
     {
-      should_quit |= asp->get_quit_signal();
+      should_quit |= asp.want_to_quit;
     }
 
     return !should_quit;
@@ -293,6 +277,9 @@ Engine::get_state(Engine_state &out)
   out.transform_count         = out.node_count;
   out.window_count            = data->window_node_id.size();
 }
+
+
+
 
 
 } // ns

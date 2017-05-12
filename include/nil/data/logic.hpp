@@ -21,7 +21,6 @@ struct Logic
 };
 
 
-
 void
 get(const Node &node, Logic &out);
 

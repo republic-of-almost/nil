@@ -18,6 +18,7 @@ namespace Data {
 
 struct Developer
 {
+  uint32_t type_id;
   uintptr_t aux_01;
   uintptr_t aux_02;
   uintptr_t aux_03;

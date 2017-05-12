@@ -22,7 +22,7 @@ struct Engine_settings
 struct Engine_state
 {
   // Events
-  Node_event*   node_events;
+  Event_data*   node_events;
   size_t        node_event_count;
   
   // Data Count
@@ -62,12 +62,8 @@ public:
   
   
   void
-  add_aspect(Nil::Aspect *aspect);
-  
-  
-  void
-  remove_aspect(Nil::Aspect *aspect);
-  
+  add_aspect(Nil::Aspect aspect);
+    
   
   size_t
   aspect_count() const;

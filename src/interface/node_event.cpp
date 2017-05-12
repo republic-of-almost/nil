@@ -3,32 +3,77 @@
 
 
 namespace Nil {
-namespace Event {
+
+
+Event_list::Event_list(std::vector<Event_data> evts)
+: pointer(0)
+, events(evts)
+{
+  
+}
+
+
+Event_list::Event_list()
+: pointer(0)
+{
+  
+}
+
+
+Event_list::Event_list(const Event_list &other)
+{
+  pointer = other.pointer;
+  events = other.events;
+}
 
 
 bool
-node_added(const Node_event &evt)
+Event_list::get(Event_data &data)
+{
+  if(pointer >= events.size())
+  {
+    return false;
+  }
+  
+  data = events[pointer++];
+  
+  return true;
+}
+
+
+namespace Event {
+
+
+Node
+node(const Event_data &evt)
+{
+  return Node(evt.node_id, false);
+}
+
+
+bool
+node_added(const Event_data &evt)
 {
   return !!(evt.events & Graph::Event::ADDED);
 }
 
 
 bool
-node_moved(const Node_event &evt)
+node_moved(const Event_data &evt)
 {
   return !!(evt.events & Graph::Event::MOVED);
 }
 
 
 bool
-node_removed(const Node_event &evt)
+node_removed(const Event_data &evt)
 {
   return !!(evt.events & Graph::Event::REMOVED);
 }
 
 
 bool
-node_updated(const Node_event &evt)
+node_updated(const Event_data &evt)
 {
   return !!(evt.events & Graph::Event::UPDATED_DATA);
 }
