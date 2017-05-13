@@ -64,24 +64,24 @@ namespace
   }
 
 
-  inline uint64_t
-  set_parent_id(const uint64_t data, const uint32_t parent_id)
-  {
-    return lib::bits::pack3232(
-      get_depth(data),
-      parent_id   
-    );
-  }
-
-
-  inline uint64_t
-  set_depth(const uint64_t data, const uint32_t depth)
-  {
-    return lib::bits::pack3232(
-      depth,
-      get_parent_id(data)
-    );
-  }
+//  inline uint64_t
+//  set_parent_id(const uint64_t data, const uint32_t parent_id)
+//  {
+//    return lib::bits::pack3232(
+//      get_depth(data),
+//      parent_id   
+//    );
+//  }
+//
+//
+//  inline uint64_t
+//  set_depth(const uint64_t data, const uint32_t depth)
+//  {
+//    return lib::bits::pack3232(
+//      depth,
+//      get_parent_id(data)
+//    );
+//  }
   
   
   inline Graph::Event*
@@ -1164,7 +1164,7 @@ bool
 node_get_data_type_id(
   const Data *data,
   const uint32_t node_id,
-  uint32_t *type_id)
+  uint64_t *type_id)
 {
   size_t index = 0;
   

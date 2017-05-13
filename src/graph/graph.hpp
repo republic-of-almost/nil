@@ -141,7 +141,7 @@ bool
 node_get_data_type_id(
   const Data *data,
   const uint32_t node_id,
-  uint32_t *type_id);
+  uint64_t *type_id);
 
 
 bool

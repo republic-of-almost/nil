@@ -274,7 +274,7 @@ parse(const char *data)
   parser_state curr_parser_state = parser_state::whitespace;
 
   int curr_index = 0;
-  int array_index = -1;
+//  int array_index = -1;
 
   std::string curr_buffer = "";
 
@@ -473,7 +473,7 @@ parse(const char *data)
           curr_node = curr_node->get_parent();
           assert(curr_node);
 
-          auto parent = curr_node;
+//          auto parent = curr_node;
 
           curr_node->add_child();
           curr_node = curr_node->get_child(-1);

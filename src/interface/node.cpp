@@ -337,7 +337,7 @@ Node::get_data_type_id() const
   
   if(instance_id)
   {
-    uint32_t type_id;
+    uint64_t type_id;
     Graph::node_get_data_type_id(Data::get_graph_data(), instance_id, &type_id);
     return type_id;
   }

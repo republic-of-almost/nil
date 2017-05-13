@@ -48,7 +48,7 @@ getter_helper(const uint32_t id, const S &id_arr, const T &data_arr, U &out)
 
 template<typename S, typename T, typename U>
 bool
-setter_helper(Node node, S &id_arr, T &data_arr, const U &in, const uint32_t data_type_id)
+setter_helper(Node node, S &id_arr, T &data_arr, const U &in, const uint64_t data_type_id)
 {
   size_t index = 0;
   
@@ -61,7 +61,7 @@ setter_helper(Node node, S &id_arr, T &data_arr, const U &in, const uint32_t dat
     id_arr.emplace_back(node.get_id());
     data_arr.emplace_back(in);
     
-    const uint32_t id = node.get_data_type_id();
+    const uint64_t id = node.get_data_type_id();
     node.set_data_type_id(id | data_type_id);
   }
   

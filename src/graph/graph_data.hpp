@@ -36,7 +36,7 @@ struct Event
   short_string    name;
   math::transform transform;
   math::aabb      boundinb_box;
-  uint32_t        node_type_id;
+  uint64_t        node_type_id;
   uintptr_t       user_data;
   uint64_t        last_update;
 };

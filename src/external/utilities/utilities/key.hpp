@@ -113,7 +113,7 @@ id_to_ptr(const uint32_t id)
 uint32_t
 id_from_ptr(const void *ptr)
 {
-  const uint32_t usr = (size_t)ptr;
+  const uint32_t usr = (uint32_t)(size_t)ptr;
   return usr;
 }
 
