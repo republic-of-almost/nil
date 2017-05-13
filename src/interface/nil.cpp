@@ -16,7 +16,6 @@ struct Engine::Impl
 {
   std::vector<Aspect> aspects;
   
-  
   Engine_settings settings;
   std::vector<Event_data> pending_events;
 };
@@ -122,68 +121,24 @@ Engine::run()
       for(size_t j = 0; j < event_count; ++j)
       {
         const Node event_node(Data::get_graph_data()->node_events[j].node_id);
-       
-//        const size_t count = asp.data_types.size();
-//        const uint64_t *reged_ids = asp.data_types.data();
-
         const uint64_t data_types = asp.data_types;
-        
-//        for(size_t i = 0; i < count; ++i)
+
+        if(data_types & event_node.get_data_type_id())
         {
-//          const uint64_t data_id = reged_ids[i];
-          if(event_node.get_id() == 5)
-          {
-            int foo = 0;
-          }
+          const uint32_t actions = Data::get_graph_data()->node_events[j].event_action;
           
-          if(data_types & event_node.get_data_type_id())
-          {
-            const uint32_t actions = Data::get_graph_data()->node_events[j].event_action;
-          
-            nodes.emplace_back(Event_data{event_node.get_id(), actions});
-          }
+          nodes.emplace_back(Event_data{event_node.get_id(), actions});
         }
       }
     
-      
-//      const size_t count = asp->get_registered_type_count();
-//      const uint32_t *reged_ids = asp->get_registered_types();
-//      
-//      nodes.clear();
-//      
-//      for(size_t i = 0; i < count; ++i)
-//      {
-//        uint32_t data_id = reged_ids[i];
-//        
-//        for(size_t j = 0; j < Data::get_graph_data()->node_events.size(); ++j)
-//        {
-//          const Node event_node(Data::get_graph_data()->node_events[j].node_id, false);
-//        
-//          if(data_id & event_node.get_data_type_id())
-//          {
-//            const uint32_t actions = Data::get_graph_data()->node_events[j].event_action;
-//          
-//            nodes.emplace_back(Node_event{event_node, actions});
-//            break;
-//          }
-//        }
-//      }
-    
       if(asp.events_fn)
       {
-//        uint32_t dt_size = asp.data_types.size();
-      
         Event_list evt_list(nodes);
         asp.events_fn(*this, asp, evt_list);
       }
-      
-      // Get list of registered type ids
-      // Build list of changes.
-      // send to aspect event handler.
     }
     
     Graph::think(Data::get_graph_data());
-//    Data::get_graph_data()->node_events.clear();
   }
   
   
@@ -192,7 +147,6 @@ Engine::run()
   {
     for(Aspect &asp : m_impl->aspects)
     {
-//      asp->early_think(0.16);
       if(asp.early_think_fn)
       {
         asp.early_think_fn(*this, asp);
