@@ -97,7 +97,7 @@ quat_init_with_axis_angle(const float x, const float y, const float z, const flo
   const float qy = sin_angle * y;
   const float qz = sin_angle * z;
   const float qw = MATH_NS_NAME::cos(half_angle);
-
+  
   return quat_init(qx, qy, qz, qw);
 }
 

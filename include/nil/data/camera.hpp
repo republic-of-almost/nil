@@ -15,8 +15,8 @@ struct Camera
   enum { PERSPECTIVE, ORTHOGRAPHIC } type;
   
   uint32_t priority;
-  uint32_t width;
-  uint32_t height;
+  float width;
+  float height;
   float fov;
   float near_plane;
   float far_plane;
