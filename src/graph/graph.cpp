@@ -147,6 +147,106 @@ namespace
   
   
   void
+  graph_updated(Graph::Data *graph, const Graph::Event *evt)
+  {
+    // Update transforms //
+    // Find this node positions
+    // Find number of chilren
+    
+    // -- Properties -- //
+    const uint32_t this_id = evt->node_id;
+    uint32_t parent_id = 0;
+
+    size_t this_index = 0;
+    uint32_t this_depth = 0;
+    {
+      if(!lib::key::linear_search(
+        this_id,
+        graph->node_id.data(),
+        graph->node_id.size(),
+        &this_index))
+      {
+        return;
+      }
+      
+      this_depth = get_depth(graph->parent_depth_data[this_index]);
+      parent_id = get_parent_id(graph->parent_depth_data[this_index]);
+    }
+    
+    uint32_t nodes_to_update = node_descendants_count(graph, this_id) + 1;
+  
+    // -- //
+    size_t parent_index   = 0;
+    size_t insert_index   = graph->node_id.size();
+    uint32_t parent_depth = 0;
+    {
+      if(parent_id > 0)
+      {
+        const uint32_t *node_ids = graph->node_id.data();
+        const size_t node_count = graph->node_id.size();
+        
+        if(!lib::key::linear_search(
+          parent_id,
+          node_ids,
+          node_count,
+          &parent_index))
+        {
+          LOG_FATAL("Graph is corrupted");
+          return;
+        }
+
+        insert_index = parent_index + 1;
+        parent_depth = get_depth(graph->parent_depth_data[parent_index]);
+      }
+    }
+    
+    // Update Transforms //
+    {
+      lib::array<math::transform, stack_hint> transform_stack;
+      
+      if(parent_index)
+      {
+        transform_stack.emplace_back(graph->world_transform[parent_index]);
+      }
+      else
+      {
+        transform_stack.emplace_back(math::transform_init());
+      }
+      
+      uint32_t curr_depth = this_depth;
+      
+      for(uint32_t i = 0; i < nodes_to_update; ++i)
+      {
+        const size_t index  = this_index + i;
+        const uint64_t data = graph->parent_depth_data[index];
+        const uint32_t depth = get_depth(data);
+        
+        // Pop off all unrequired transforms.
+        while((curr_depth + 1) < depth)
+        {
+          transform_stack.pop_back();
+          curr_depth -= 1;
+        }
+        
+        curr_depth = depth;
+      
+        // Calc new world transform.
+        const math::transform child_world(
+          math::transform_inherited(
+            transform_stack.top(),
+            graph->local_transform[index]
+          )
+        );
+        
+        graph->world_transform[index] = child_world;
+        
+        transform_stack.emplace_back(child_world);
+      }
+    }
+  }
+  
+  
+  void
   graph_move(Graph::Data *graph, const Graph::Event *evt)
   {
     // -- Properties -- //
@@ -256,7 +356,7 @@ namespace
         {
           const uint32_t *node_ids = graph->node_id.data();
           const size_t node_count = graph->node_id.size();
-        
+          
           if(!lib::key::linear_search(
             parent_id,
             node_ids,
@@ -362,8 +462,47 @@ namespace
       {
         graph->last_update[i] = graph->graph_tick;
       }
+      
+      // -- Update transforms -- //
+      /*
+        Transforms are nested so we keep a stack of transforms that represent
+        the parent transform, we pop off when we walk up the tree.
+      */
+      {
+        lib::array<math::transform, stack_hint> transform_stack;
+        transform_stack.emplace_back(graph->world_transform[parent_index]);
+        
+        uint32_t curr_depth = parent_depth;
+        
+        for(uint32_t i = 0; i < nodes_to_move; ++i)
+        {
+          const size_t index  = insert_index + i;
+          const uint64_t data = graph->parent_depth_data[index];
+          const uint32_t depth = get_depth(data);
+          
+          // Pop off all unrequired transforms.
+          while((curr_depth + 1) < depth)
+          {
+            transform_stack.pop_back();
+            curr_depth -= 1;
+          }
+          
+          curr_depth = depth;
+        
+          // Calc new world transform.
+          const math::transform child_world(
+            math::transform_inherited(
+              transform_stack.top(),
+              graph->local_transform[index]
+            )
+          );
+          
+          graph->world_transform[index] = child_world;
+          
+          transform_stack.emplace_back(child_world);
+        }
+      }
     }
-
   }
   
   
@@ -692,6 +831,20 @@ think(Data *graph)
         graph->last_update[index] = graph->graph_tick;
       }
     }
+    
+    for(const Graph::Event &event : graph->node_events)
+    {
+      if(event.event_action & Graph::Event::UPDATED_DATA)
+      {
+        graph_updated(graph, &event);
+      }
+      
+      size_t index = 0;
+      if(node_exists(graph, event.node_id, &index))
+      {
+        graph->last_update[index] = graph->graph_tick;
+      }
+    }
   }
   
   
@@ -903,7 +1056,7 @@ node_descendants_count(
   // Calculate descendants  
   {
     const int32_t this_depth = node_id ? get_depth(graph->parent_depth_data[index]) : -1;
-    const size_t start = this_depth > 0 ? index + 1 : 0;
+    const size_t start = this_depth >= 0 ? index + 1 : 0;
     
     for(size_t i = start; i < graph->node_id.size(); ++i)
     {
@@ -1068,13 +1221,21 @@ bool
 node_get_transform(
   const Data *data,
   const uint32_t node_id,
-  math::transform *trans)
+  math::transform *trans,
+  const bool world)
 {
   size_t index = 0;
   
   if(node_exists(data, node_id, &index))
   {
-    *trans = data->local_transform[index];
+    if(!world)
+    {
+      *trans = data->local_transform[index];
+    }
+    else
+    {
+      *trans = data->world_transform[index];
+    }
     return true;
   }
   else if(node_pending(data, node_id, &index))
@@ -1097,8 +1258,15 @@ node_set_transform(
   
   if(node_exists(data, node_id, &index))
   {
+    const size_t child_count = node_descendants_count(data, node_id);
+    
     data->local_transform[index] = *trans;
-    add_event(data, Graph::Event::UPDATED_DATA, node_id);
+    
+    for(uint32_t i = 0; i < child_count + 1; ++i)
+    {
+      const size_t update = index + i;
+      add_event(data, Graph::Event::UPDATED_DATA, data->node_id[update]);
+    }
     return true;
   }
   else if(node_pending(data, node_id, &index))

@@ -5,7 +5,7 @@
 #include <nil/fwd.hpp>
 #include <stdint.h>
 #include <stddef.h>
-
+#include <math/math.hpp> // temp
 
 namespace Nil {
 
@@ -83,6 +83,29 @@ public:
   
   void
   get_state(Engine_state &out);
+  
+  
+  // ----------------------------------------------------- [ Debugging Info ] --
+  
+  
+  size_t
+  graph_data_count() const;
+  
+  
+  const uint32_t*
+  graph_data_get_ids() const;
+  
+  
+  const uint64_t*
+  graph_data_details() const;
+  
+  
+  const math::transform*
+  graph_data_local_transforms() const;
+  
+  
+  const math::transform*
+  graph_data_world_transforms() const;
   
 
 private:

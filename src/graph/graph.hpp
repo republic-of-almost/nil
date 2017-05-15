@@ -113,7 +113,8 @@ bool
 node_get_transform(
   const Data *data,
   const uint32_t node_id,
-  math::transform *trans);
+  math::transform *trans,
+  const bool world = false);
 
 
 bool

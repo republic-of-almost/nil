@@ -240,7 +240,42 @@ Engine::get_state(Engine_state &out)
 }
 
 
+// ------------------------------------------------------- [ Debugging Info ] --
 
+
+size_t
+Engine::graph_data_count() const
+{
+  return Data::get_graph_data()->node_id.size();
+}
+
+
+const uint32_t*
+Engine::graph_data_get_ids() const
+{
+  return Data::get_graph_data()->node_id.data();
+}
+
+
+const uint64_t*
+Engine::graph_data_details() const
+{
+  return Data::get_graph_data()->parent_depth_data.data();
+}
+
+
+const math::transform*
+Engine::graph_data_local_transforms() const
+{
+  return Data::get_graph_data()->local_transform.data();
+}
+
+
+const math::transform*
+Engine::graph_data_world_transforms() const
+{
+  return Data::get_graph_data()->world_transform.data();
+}
 
 
 } // ns

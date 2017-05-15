@@ -11,12 +11,12 @@ namespace Data {
 
 
 void
-get(const Node &node, Transform &out)
+get(const Node &node, Transform &out, const bool world)
 {
   if(node.is_valid())
   {
     math::transform internal;
-    if(Graph::node_get_transform(Data::get_graph_data(), node.get_id(), &internal))
+    if(Graph::node_get_transform(Data::get_graph_data(), node.get_id(), &internal, world))
     {
       memcpy(out.position, &internal.position, sizeof(float) * 3);
       memcpy(out.scale,    &internal.scale,    sizeof(float) * 3);

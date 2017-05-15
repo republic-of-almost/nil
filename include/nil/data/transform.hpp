@@ -19,7 +19,7 @@ struct Transform
 
 
 void
-get(const Node &node, Transform &out);
+get(const Node &node, Transform &out, const bool world = false);
 
 
 void
