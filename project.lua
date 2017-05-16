@@ -45,11 +45,12 @@ table.insert(
 
     inc_dirs = {
       make.get_proj_root() .. "include/",
-      make.get_proj_root() .. "include/external",
       make.get_proj_root() .. "src/",
-      make.get_proj_root() .. "src/external/",
-      make.get_proj_root() .. "src/external/math/",
-      make.get_proj_root() .. "src/external/utilities/",
+    },
+
+    project_dependencies = {
+      "Utilities",
+      "Math",
     },
 
    link_dependencies_macosx = {
