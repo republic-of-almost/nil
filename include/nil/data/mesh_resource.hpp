@@ -18,6 +18,8 @@ namespace Data {
 
 struct Mesh_resource
 {
+  uint32_t id;
+
   float *position_vec3;
   float *normal_vec3;
   float *texture_coords_vec2;
