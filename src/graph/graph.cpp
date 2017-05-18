@@ -106,6 +106,8 @@ namespace
     memset(graph->node_events.back().name.data, 0, sizeof(short_string));
     graph->node_events.back().last_update = graph->graph_tick;
     
+    graph->node_events.back().transform = math::transform_init();
+    
     return &graph->node_events.back();
   }
 

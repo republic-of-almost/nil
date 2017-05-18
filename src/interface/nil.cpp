@@ -88,7 +88,7 @@ Engine::run()
     LOG_ERROR_ONCE("Engine is in corrupted state.");
     return false;
   }
- 
+  
   /*
     Create list of events
   */
@@ -140,8 +140,6 @@ Engine::run()
     
     Graph::think(Data::get_graph_data());
   }
-  
-  
   
   // Thinking
   {

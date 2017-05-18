@@ -19,6 +19,7 @@ namespace Data {
 struct Mesh_resource
 {
   uint32_t id;
+  uint32_t status;
 
   float *position_vec3;
   float *normal_vec3;

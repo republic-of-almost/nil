@@ -35,43 +35,54 @@ set(Node &node, const Mesh_resource &in)
   Mesh_resource cpy_in{};
   cpy_in.count = in.count;
   
-  // Copy all the mesh data.
+  if(in.status > 0)
   {
-    if(in.position_vec3)
+    cpy_in.status = in.status;
+    
+    // Copy all the mesh data.
     {
-      const size_t data_size = sizeof(float) * in.count * 3;
-      float *cpy_data = (float*)malloc(data_size);
-      memcpy(cpy_data, in.position_vec3, data_size);
+      if(in.position_vec3)
+      {
+        const size_t data_size = sizeof(float) * in.count * 3;
+        float *cpy_data = (float*)malloc(data_size);
+        memcpy(cpy_data, in.position_vec3, data_size);
+        
+        cpy_in.position_vec3 = cpy_data;
+      }
       
-      cpy_in.position_vec3 = cpy_data;
+      if(in.normal_vec3)
+      {
+        const size_t data_size = sizeof(float) * in.count * 3;
+        float *cpy_data = (float*)malloc(data_size);
+        memcpy(cpy_data, in.normal_vec3, data_size);
+        
+        cpy_in.normal_vec3 = cpy_data;
+      }
+      
+      if(in.texture_coords_vec2)
+      {
+        const size_t data_size = sizeof(float) * in.count * 2;
+        float *cpy_data = (float*)malloc(data_size);
+        memcpy(cpy_data, in.texture_coords_vec2, data_size);
+        
+        cpy_in.texture_coords_vec2 = cpy_data;
+      };
+      
+      if(in.color_vec4)
+      {
+        const size_t data_size = sizeof(float) * in.count * 4;
+        float *cpy_data = (float*)malloc(data_size);
+        memcpy(cpy_data, in.color_vec4, data_size);
+        
+        cpy_in.color_vec4 = cpy_data;
+      };
     }
-    
-    if(in.normal_vec3)
-    {
-      const size_t data_size = sizeof(float) * in.count * 3;
-      float *cpy_data = (float*)malloc(data_size);
-      memcpy(cpy_data, in.normal_vec3, data_size);
-      
-      cpy_in.normal_vec3 = cpy_data;
-    }
-    
-    if(in.texture_coords_vec2)
-    {
-      const size_t data_size = sizeof(float) * in.count * 2;
-      float *cpy_data = (float*)malloc(data_size);
-      memcpy(cpy_data, in.texture_coords_vec2, data_size);
-      
-      cpy_in.texture_coords_vec2 = cpy_data;
-    };
-    
-    if(in.color_vec4)
-    {
-      const size_t data_size = sizeof(float) * in.count * 4;
-      float *cpy_data = (float*)malloc(data_size);
-      memcpy(cpy_data, in.color_vec4, data_size);
-      
-      cpy_in.color_vec4 = cpy_data;
-    };
+  }
+  else
+  {
+    cpy_in.position_vec3 = in.position_vec3;
+    cpy_in.normal_vec3 = in.normal_vec3;
+    cpy_in.texture_coords_vec2 = in.texture_coords_vec2;
   }
 
   if(!setter_helper(
