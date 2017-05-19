@@ -13,21 +13,9 @@ table.insert(
     location = make.get_proj_root(),
 
     src_files = {
-      make.get_proj_root() .. "src/**.hpp",
-      make.get_proj_root() .. "src/**.cpp",
-      make.get_proj_root() .. "src/**.mm",
-      make.get_proj_root() .. "src/**.h",
-      make.get_proj_root() .. "src/**.c",
-      make.get_proj_root() .. "src/**.m",
-      make.get_proj_root() .. "src/**.md",
-
-      make.get_proj_root() .. "include/**.hpp",
-      make.get_proj_root() .. "include/**.cpp",
-      make.get_proj_root() .. "include/**.mm",
-      make.get_proj_root() .. "include/**.h",
-      make.get_proj_root() .. "include/**.c",
-      make.get_proj_root() .. "include/**.m",
-      make.get_proj_root() .. "include/**.md",
+      make.add_headers(make.get_proj_root()),
+      make.add_src(make.get_proj_root()),
+      make.add_doc(make.get_proj_root()),
     },
 
     -- asset_dir = "assets/",
