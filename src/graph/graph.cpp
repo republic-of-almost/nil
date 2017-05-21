@@ -87,15 +87,26 @@ namespace
   inline Graph::Event*
   add_event(Graph::Data *graph, uint32_t evt_id, uint32_t node_id)
   {
-    for(size_t i = 0; i < graph->node_events.size(); ++i)
+    // Search for existing event.
     {
-      if(graph->node_events[i].node_id == node_id)
+      const size_t count = graph->node_events.size();
+      Graph::Event *events = graph->node_events.data();
+    
+      for(size_t i = 0; i < count; ++i)
       {
-        uint32_t curr_events = graph->node_events[i].event_action;
+        Graph::Event *evt = &events[i];
       
-        graph->node_events[i].event_action = curr_events | evt_id;
+        if(evt->node_id == node_id)
+        {
+          const uint32_t curr_events = evt->event_action;
         
-        return &graph->node_events[i];
+          if(!(curr_events & evt_id))
+          {
+            evt->event_action = curr_events | evt_id;
+          }
+          
+          return evt;
+        }
       }
     }
     

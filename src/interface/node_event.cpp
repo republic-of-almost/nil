@@ -27,6 +27,13 @@ Event_list::Event_list(const Event_list &other)
 }
 
 
+void
+Event_list::reset()
+{
+  pointer = 0;
+}
+
+
 bool
 Event_list::get(Event_data &data)
 {

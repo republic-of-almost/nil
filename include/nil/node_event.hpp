@@ -30,6 +30,8 @@ public:
   explicit    Event_list();
               Event_list(const Event_list &other);
   
+  void        reset();
+  
   bool        get(Event_data &data);
   
 private:
