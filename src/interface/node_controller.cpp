@@ -190,20 +190,26 @@ Node_controller::process(Event_list &evts)
   
     if(m_impl->data_types & node.get_data_type_id())
     {
-      if(Event::node_added(evt))
+      /*
+        Nodes that are removed shouldn't bother letting aspects create data
+        that they just have to delete.
+      */
+      if(!Event::node_removed(evt))
       {
-        m_impl->added_nodes.emplace_back(node);
-        m_impl->updated_and_added.emplace_back(node);
-        m_impl->all_nodes.emplace_back(node);
-      }
+        if(Event::node_added(evt))
+        {
+          m_impl->added_nodes.emplace_back(node);
+          m_impl->updated_and_added.emplace_back(node);
+          m_impl->all_nodes.emplace_back(node);
+        }
 
-      if(Event::node_moved(evt) || Event::node_updated(evt))
-      {
-        m_impl->updated_nodes.emplace_back(node);
-        m_impl->updated_and_added.emplace_back(node);
+        if(Event::node_moved(evt) || Event::node_updated(evt))
+        {
+          m_impl->updated_nodes.emplace_back(node);
+          m_impl->updated_and_added.emplace_back(node);
+        }
       }
-      
-      if(Event::node_removed(evt))
+      else if(Event::node_removed(evt))
       {
         m_impl->removed_nodes.emplace_back(node);
         
