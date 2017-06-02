@@ -42,8 +42,19 @@ struct Event
 };
 
 
+/*
+  TODO:
+  Break this up, have data register with the graph.
+  This means we could expose it to add any type of data.
+*/
 struct Component_data
 {
+  lib::array<uint32_t>                    audio_node_id;
+  lib::array<Nil::Data::Audio>            audio_data;
+  
+  lib::array<uint32_t>                    audio_resource_node_id;
+  lib::array<Nil::Data::Audio_resource>   audio_resource_data;
+
   lib::array<uint32_t>                    camera_node_id;
   lib::array<Nil::Data::Camera>           camera_data;
   

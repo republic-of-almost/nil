@@ -20,6 +20,8 @@ struct Aspect;
 namespace Data {
 
 
+struct Audio;
+struct Audio_resource;
 struct Bounding_box;
 struct Camera;
 struct Collider;
