@@ -45,7 +45,7 @@ set(Node &node, const Audio &in)
 
 
 bool
-has_audio_resource(const Node &node)
+has_audio(const Node &node)
 {
   NIL_DATA_GETTER_SETTER_HAS_SETUP
   

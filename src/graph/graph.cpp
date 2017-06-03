@@ -548,6 +548,34 @@ namespace
     {
       Component_data &data = graph->component_data;
       
+      // Audio Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.audio_node_id.data(),
+          data.audio_node_id.size(), &index))
+        {
+          data.audio_node_id.erase(index);
+          data.audio_data.erase(index);
+        }
+      }
+      
+      // Audio Resource Data
+      {
+        size_t index = 0;
+        
+        if(lib::key::linear_search(
+          node_id,
+          data.audio_resource_node_id.data(),
+          data.audio_resource_node_id.size(), &index))
+        {
+          data.audio_resource_node_id.erase(index);
+          data.audio_resource_data.erase(index);
+        }
+      }
+      
       // Camera Data
       {
         size_t index = 0;

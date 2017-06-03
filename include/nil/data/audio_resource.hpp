@@ -15,7 +15,7 @@ struct Audio_resource
   uint32_t id;
   uint32_t status;
   
-  const char *filename;
+  char *filename;
 };
 
 

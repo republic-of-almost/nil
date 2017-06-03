@@ -13,6 +13,10 @@ namespace Data {
 struct Audio
 {
   uint32_t audio_id;
+  
+  enum { NO_REQ_STATE, PLAY, STOP }         request_state;
+  enum { NO_CURR_STATE, PLAYING, STOPPED }   current_state;
+  
   float volume;
 };
 
@@ -25,7 +29,7 @@ void
 set(Node &node, const Audio &in);
 
 
-void
+bool
 has_audio(const Node &node);
 
 
