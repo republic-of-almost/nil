@@ -230,18 +230,18 @@ namespace
       
       for(uint32_t i = 0; i < nodes_to_update; ++i)
       {
-        const size_t index  = this_index + i;
-        const uint64_t data = graph->parent_depth_data[index];
+        const size_t   index = this_index + i;
+        const uint64_t data  = graph->parent_depth_data[index];
         const uint32_t depth = get_depth(data);
         
         // Pop off all unrequired transforms.
-        while((curr_depth + 1) < depth)
+        while((curr_depth) > depth)
         {
           transform_stack.pop_back();
           curr_depth -= 1;
         }
         
-        curr_depth = depth;
+//        curr_depth = depth;
       
         // Calc new world transform.
         const math::transform child_world(
@@ -251,9 +251,15 @@ namespace
           )
         );
         
+        if(index == 16 && math::get_y(child_world.scale) > 0.55)
+        {
+          volatile int af = 0;
+        }
+        
         graph->world_transform[index] = child_world;
         
         transform_stack.emplace_back(child_world);
+        curr_depth += 1;
       }
     }
   }
