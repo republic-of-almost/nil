@@ -153,7 +153,7 @@ namespace
     graph->user_data.emplace_back(evt->user_data);
     graph->last_update.emplace_back(evt->last_update);
 
-    #if NDEBUG
+    #ifndef NDEBUG
     graph_size_check(graph);
     #endif
   }
@@ -235,14 +235,12 @@ namespace
         const uint32_t depth = get_depth(data);
         
         // Pop off all unrequired transforms.
-        while((curr_depth) > depth)
+        while(curr_depth > depth)
         {
           transform_stack.pop_back();
           curr_depth -= 1;
         }
         
-//        curr_depth = depth;
-      
         // Calc new world transform.
         const math::transform child_world(
           math::transform_inherited(
@@ -250,11 +248,6 @@ namespace
             graph->local_transform[index]
           )
         );
-        
-        if(index == 16 && math::get_y(child_world.scale) > 0.55)
-        {
-          volatile int af = 0;
-        }
         
         graph->world_transform[index] = child_world;
         
@@ -362,7 +355,7 @@ namespace
       );
       graph->last_update.erase(this_index, nodes_to_move);
       
-      #if NDEBUG
+      #ifndef NDEBUG
       graph_size_check(graph);
       #endif
       
@@ -451,7 +444,7 @@ namespace
         nodes_to_move
       );
       
-      #if NDEBUG
+      #ifndef NDEBUG
       graph_size_check(graph);
       #endif
       

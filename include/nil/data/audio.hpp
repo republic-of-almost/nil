@@ -13,9 +13,12 @@ namespace Data {
 struct Audio
 {
   uint32_t audio_id;
+  uint32_t channel_id;
   
   enum { NO_REQ_STATE, PLAY, STOP }         request_state;
   enum { NO_CURR_STATE, PLAYING, STOPPED }   current_state;
+  
+  bool loop;
   
   float volume;
 };
