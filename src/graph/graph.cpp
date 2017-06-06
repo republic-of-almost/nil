@@ -1,6 +1,6 @@
 #include "graph.hpp"
 #include "graph_data.hpp"
-#include <utilities/utilities.hpp>
+#include <lib/utilities.hpp>
 #include <nil/data/window.hpp>
 #include <nil/data/transform.hpp>
 #include <nil/data/bounding_box.hpp>

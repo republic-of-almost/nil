@@ -2,7 +2,7 @@
 #include <data/data.hpp>
 #include <graph/graph.hpp>
 #include <graph/graph_data.hpp>
-#include <utilities/entity.hpp>
+#include <lib/entity.hpp>
 
 
 namespace {

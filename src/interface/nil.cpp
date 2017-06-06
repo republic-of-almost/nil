@@ -5,8 +5,8 @@
 #include <data/data.hpp>
 #include <graph/graph.hpp>
 #include <graph/graph_data.hpp>
-#include <utilities/array.hpp>
-#include <utilities/assert.hpp>
+#include <lib/array.hpp>
+#include <lib/assert.hpp>
 
 
 namespace Nil {

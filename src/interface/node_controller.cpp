@@ -3,7 +3,7 @@
 #include <nil/node_event.hpp>
 #include <data/data.hpp>
 #include <graph/graph_data.hpp>
-#include <utilities/utilities.hpp>
+#include <lib/utilities.hpp>
 
 
 namespace Nil {

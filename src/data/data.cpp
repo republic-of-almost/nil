@@ -1,7 +1,7 @@
 #include "data.hpp"
 #include <graph/graph_data.hpp>
 #include <nil/node.hpp>
-#include <utilities/bits.hpp>
+#include <lib/bits.hpp>
 
 
 namespace Nil {
