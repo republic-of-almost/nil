@@ -7,6 +7,9 @@
 
 
 namespace Nil {
+
+using generic_callback_fn = void(*)(Nil::Node node, uintptr_t user_data);
+
 namespace Data {
 
 
@@ -16,8 +19,14 @@ struct Logic
   uint32_t      type;
   uint32_t      logic_id;
   
-  uintptr_t     aux_01;
-  uintptr_t     aux_02;
+  uintptr_t     user_data;
+  
+  generic_callback_fn     startup;
+  generic_callback_fn     think_01;
+  generic_callback_fn     think_02;
+  generic_callback_fn     think_03;
+  generic_callback_fn     message;
+  generic_callback_fn     shutdown;
 };
 
 
