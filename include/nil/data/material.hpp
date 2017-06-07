@@ -12,7 +12,7 @@ namespace Data {
 
 struct Material
 {
-  uint32_t  shader;
+  enum { FULLBRIGHT, LIT, DIR_LIGHT }  shader;
   float     color[4];
   
   uint32_t  texture_01;
